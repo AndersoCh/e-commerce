@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import "./App.css";
+import { getCategorias } from "./fetcher";
+import ProductDetails from "./components/ProductDetails";
+import Basket from "./components/Basket";
+import CheckOut from "./components/ChecktOut";
 import Category from "./components/Category";
-import { getCategorias, getProductos } from "./fetcher";
-import Category_products from "./components/category_products";
+import Layout from "./components/Layout";
+import Home from "./components/Home";
+import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 function App() {
   const [categorias, setCategorias] = useState({ errorMessage: "", data: [] });
@@ -16,46 +21,20 @@ function App() {
     fetchData();
   }, []);
 
-  const handleCategoriaClick = (id) => {
-    const fetchData = async () => {
-      const responseObject = await getProductos(id);
-      setProductos(responseObject);
-    };
-    fetchData();
-  };
-
-  const renderCategorias = () => {
-    return categorias.data.map((c) => (
-      <Category
-        key={c.id}
-        id={c.id}
-        titulo={c.titulo}
-        onCategoriaClick={() => handleCategoriaClick(c.id)}
-      />
-    ));
-  };
-
-  const renderProductos = () => {
-    return productos.data.map((p) => (
-      <Category_products key={p.id} {...p}>{p.titulo} </Category_products>
-    ));
-  };
-
   return (
     <>
-      <header>My store</header>
-      <section>
-        <nav>
-          {categorias.errorMessage && <div>{categorias.errorMessage}</div>}
-          {categorias.data && renderCategorias()}
-        </nav>
-        <main>
-          <h1>Productos</h1>
-          {productos.errorMessage && <div>{productos.errorMessage}</div>}
-          {productos.data && renderProductos()}
-        </main>
-      </section>
-      <footer>footer</footer>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout categorias={categorias} />}>
+            <Route index element={<Home />} />
+            <Route path="home" element={<Home />} /> 
+            <Route path="basket" element={<Basket />} />
+            <Route path="checkout" element={<CheckOut />} />
+            <Route path="productos/:productId" element={<ProductDetails />} />
+            <Route path="categorias/:categoriaId" element={<Category />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </>
   );
 }

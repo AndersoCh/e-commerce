@@ -108,7 +108,7 @@ footer a {
 }
 
 .category-product-title{
-    grid-column: 1/ span 3;
+    grid-column: 1 / span 3;
     color: darkslategray;
     font-weight: bold;
     font-size: 1.5em;
