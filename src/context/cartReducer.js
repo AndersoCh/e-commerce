@@ -1,20 +1,57 @@
+const Storage = (cartItems) => {
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cartItems.length > 0 ? cartItems : [])
+  );
+};
+
 export const CartReducer = (state, action) => {
-  debugger;
+  let index = -1;
+  if (action.payload)
+    index = state.cartItems.findIndex((x) => x.id === action.payload.id);
 
   switch (action.type) {
     case "ADD":
-      const index = state.cartItems.findIndex(
-        (x) => x.id === action.payload.id
-      );
+    case "INCQTY":
       if (index === -1) {
-        state.cartItems.push({ ...action.payload, quantity: 1 });
+        const newCartItems = [...state.cartItems, { ...action.payload, quantity: 1 }];
+        Storage(newCartItems);
+        return {
+          ...state,
+          cartItems: newCartItems,
+        };
       } else {
-        state.cartItems[index].quantity++;
+        const newCartItems = state.cartItems.map((item, i) =>
+          i === index ? { ...item, quantity: item.quantity + 1 } : item
+        );
+        Storage(newCartItems);
+        return { ...state, cartItems: newCartItems };
       }
-      return state;
+
     case "REMOVE":
-      return state;
+      if (index > -1) {
+        const newCartItems = state.cartItems.filter((_, i) => i !== index);
+        Storage(newCartItems);
+        return { ...state, cartItems: newCartItems };
+      }
+      break;
+
+    case "DECQTY":
+      if (index > -1) {
+        const newCartItems = state.cartItems.map((item, i) =>
+          i === index ? { ...item, quantity: item.quantity - 1 } : item
+        );
+        Storage(newCartItems);
+        return { ...state, cartItems: newCartItems };
+      }
+      break;
+
+    case "CLEAR":
+      Storage([]);
+      return { ...state, cartItems: [] };
+
     default:
+      // No action taken, return the current state
       return state;
   }
 };

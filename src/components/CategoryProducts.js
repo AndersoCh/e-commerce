@@ -13,8 +13,7 @@ const CategoryProducts = ({
   stock,
 }) => {
   const navigate = useNavigate();
-  const cartContext = useContext(CartContext);
-  const {addProduct} = cartContext;
+  const {addProduct} = useContext(CartContext);
 
   return (
     <article>

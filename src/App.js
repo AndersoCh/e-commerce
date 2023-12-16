@@ -5,8 +5,10 @@ import ProductDetails from "./components/ProductDetails";
 import Basket from "./components/Basket";
 import CheckOut from "./components/ChecktOut";
 import Category from "./components/Category";
-import Layout from "./components/Layout";
+import Layout from "./components/layout";
 import Home from "./components/Home";
+import SearchResults from "./components/searchResult";
+import OrderConfirmation from "./components/orderConfirmation";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 
 function App() {
@@ -27,10 +29,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout categorias={categorias} />}>
             <Route index element={<Home />} />
-            <Route path="home" element={<Home />} /> 
+            <Route path="home" element={<Home />} />
             <Route path="basket" element={<Basket />} />
             <Route path="checkout" element={<CheckOut />} />
+            <Route path="orderconfirmation" element={<OrderConfirmation />} />
+            <Route path="search" element={<SearchResults/>}/>
             <Route path="productos/:productId" element={<ProductDetails />} />
+            <Route path="categorias/:categoriaId" element={<Category />} />
             <Route path="categorias/:categoriaId" element={<Category />} />
           </Route>
         </Routes>

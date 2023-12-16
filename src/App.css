@@ -174,7 +174,9 @@ footer a {
 }
 
 
-
+ header a {
+    color: white;
+ }
 .category-product-action{
     display: flex;
     flex-direction: column;
@@ -190,8 +192,20 @@ footer a {
     font-weight: bold;
 }
 
+
+
 .category-product-action button:last-child{
     background-color: darkgray;
+}
+
+#search {
+    display:flex;
+}
+
+#search input {
+ margin-left: 10px;
+ height: 30px;
+ margin-top: 5px;
 }
 
 /* Responsive layout - makes the menu and the content (inside the section) sit on top of each other instead of next to each other */
